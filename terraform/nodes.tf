@@ -29,7 +29,7 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 }
 
 resource "aws_eks_node_group" "private-nodes" {
-  cluster_name    = aws_eks_cluster.rawlabs.name
+  cluster_name    = aws_eks_cluster.test.name
   node_group_name = "private-nodes"
   node_role_arn   = aws_iam_role.nodes.arn
 
@@ -53,7 +53,7 @@ resource "aws_eks_node_group" "private-nodes" {
 
   labels = {
     role = "general"
-  }  
+  }
   depends_on = [
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,

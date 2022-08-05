@@ -1,5 +1,5 @@
-resource "aws_iam_role" "rawlabs" {
-  name = "eks-cluster-rawlabs"
+resource "aws_iam_role" "test_policy" {
+  name = "eks-cluster-test"
 
   assume_role_policy = <<POLICY
 {
@@ -17,14 +17,14 @@ resource "aws_iam_role" "rawlabs" {
 POLICY
 }
 
-resource "aws_iam_role_policy_attachment" "rawlabs-AmazonEKSClusterPolicy" {
+resource "aws_iam_role_policy_attachment" "test-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.rawlabs.name
+  role       = aws_iam_role.test_policy.name
 }
 
-resource "aws_eks_cluster" "rawlabs" {
-  name     = "rawlabs"
-  role_arn = aws_iam_role.rawlabs.arn
+resource "aws_eks_cluster" "test" {
+  name     = "test"
+  role_arn = aws_iam_role.test_policy.arn
 
   vpc_config {
     subnet_ids = [
@@ -35,5 +35,5 @@ resource "aws_eks_cluster" "rawlabs" {
     ]
   }
 
-  depends_on = [aws_iam_role_policy_attachment.rawlabs-AmazonEKSClusterPolicy]
+  depends_on = [aws_iam_role_policy_attachment.test-AmazonEKSClusterPolicy]
 }
